@@ -4,7 +4,7 @@ Repository for common CI workflows.
 
 ## Usage
 
-Aany workflow can be called as follows:
+Any workflow can be called as follows:
 
 ```yml
 call-worflow:
