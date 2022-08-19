@@ -4,7 +4,7 @@ Repository for common CI workflows.
 
 ## Usage
 
-Firstly, you need to clone this repository in your actions workflow.
+Firstly, you need to clone this repository in your actions workflow as follows:
 
 ```yml
 steps:
