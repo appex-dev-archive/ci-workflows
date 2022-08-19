@@ -32,6 +32,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ inputs.node-version }}
+          registry-url: https://npm.pkg.github.com/
+          scope: '@appex'
       - run: npm ci
       - if: ${{ inputs.audit-enabled }}
         run: npm run audit
