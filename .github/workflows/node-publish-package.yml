@@ -1,0 +1,24 @@
+name: Node publish package
+
+on:
+  workflow_call:
+    inputs:
+      node-version: 
+        description: 'Sets the current node version'
+        default: '16'
+        required: false
+        type: string
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          registry-url: https://npm.pkg.github.com/
+          scope: '@appex'
+      - run: npm ci
+      - run: ${{ github.action_path }}/scripts/publish_package.sh ${{ inputs.is_publish }} ${{ inputs.package_location }}
+        shell: bash

@@ -3,22 +3,22 @@ name: Node build and verify
 on:
   workflow_call:
     inputs:
-      node_version: 
+      node-version: 
         description: 'Sets the current node version'
         default: '16'
         required: false
         type: string
-      audit_enabled:
+      audit-enabled:
         description: 'Set to false to disable auditing'
         default: true
         required: false
         type: boolean
-      linting_enabled:
+      linting-enabled:
         description: 'Set to false to disable linting'
         default: true
         required: false
         type: boolean
-      tests_enabled:
+      tests-enabled:
         description: 'Set to false to disable tests'
         default: true
         required: false
@@ -31,11 +31,11 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ inputs.node_version }}
+          node-version: ${{ inputs.node-version }}
       - run: npm ci
-      - if: ${{ inputs.audit_enabled }}
+      - if: ${{ inputs.audit-enabled }}
         run: npm run audit
-      - if: ${{ inputs.linting_enabled }}
+      - if: ${{ inputs.linting-enabled }}
         run: npm run lint
-      - if: ${{ inputs.tests_enabled }}
+      - if: ${{ inputs.tests-enabled }}
         run: npm test

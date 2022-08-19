@@ -4,18 +4,18 @@ Repository for common CI workflows.
 
 ## Usage
 
-Firstly, you need to clone this repository in your actions workflow.
-
-```yml
-steps:
-    - uses: actions/checkout@v3
-      with:
-        name: appex-org/ci-workflows
-```
-
-Then any workflow can be called as follows:
+Aany workflow can be called as follows:
 
 ```yml
 call-worflow:
-    uses: ./.github/workflows/node-build-and-verify.yml
+    uses: appex-org/ci-workflows/.github/workflows/node-build-and-verify.yml@main
+```
+
+Parameters can be passed in as follows:
+
+```yml
+call-worflow:
+    uses: appex-org/ci-workflows/.github/workflows/node-build-and-verify.yml@main
+    with:
+        node_version: 14
 ```
