@@ -1,0 +1,41 @@
+name: Node build and verify
+
+on:
+  workflow_call:
+    inputs:
+      node_version: 
+        description: 'Sets the current node version'
+        default: '16'
+        required: false
+        type: string
+      audit_enabled:
+        description: 'Set to false to disable auditing'
+        default: true
+        required: false
+        type: boolean
+      linting_enabled:
+        description: 'Set to false to disable linting'
+        default: true
+        required: false
+        type: boolean
+      tests_enabled:
+        description: 'Set to false to disable tests'
+        default: true
+        required: false
+        type: boolean
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node_version }}
+      - run: npm ci
+      - if: ${{ inputs.audit_enabled }}
+        run: npm run audit
+      - if: ${{ inputs.linting_enabled }}
+        run: npm run lint
+      - if: ${{ inputs.tests_enabled }}
+        run: npm test
