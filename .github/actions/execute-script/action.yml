@@ -22,5 +22,5 @@ runs:
       shell: bash
     - run: chmod a+x ./${{ inputs.name }}.sh
       shell: bash
-    - run: bash ${{ github.action_path }}/../../../scripts/${{ inputs.name }}.sh ${{ inputs.params }}
+    - run: ${{ inputs.name }}.sh ${{ inputs.params }}
       shell: bash
