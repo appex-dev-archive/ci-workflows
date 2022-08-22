@@ -32,6 +32,6 @@ jobs:
       - run: ./scripts/publish_package.sh ${{ inputs.only-version }}
         shell: bash
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
           GIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_USERNAME: ${{ github.actor }}
+          NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
