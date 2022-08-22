@@ -1,19 +1,20 @@
 #!/bin/bash
 
-ONLY_VERSION=$1
+read -a params <<< "$1"
+only_version="${params[0]}"
 
 git config --global user.email "$GIT_EMAIL"
 git config --global user.name "$GIT_USERNAME"
 git pull
 git checkout main
 
-TAG="$(git describe --tags --abbrev=0)"
+tag="$(git describe --tags --abbrev=0)"
 
-npm version "$TAG" -m "Release version: %s"
+npm version "$tag" -m "Release version: %s"
 
 git push
 
-if [ "$ONLY_VERSION" = "false" ]
+if [ "$only_version" = "false" ]
 then
   npm publish
 fi

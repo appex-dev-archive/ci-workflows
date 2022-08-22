@@ -29,8 +29,10 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@appex'
       - run: npm ci
-      - run: curl -s http://raw.githubusercontent.com/appex-org/ci-workflows/main/scripts/publish_package.sh | bash -s ${{ inputs.only-version }}
-        shell: bash
+      - uses: appex-org/ci-workflows/.github/actions/execute-script@main
+        with: 
+          name: publish-script
+          params: ${{ inputs.only-version }}
         env:
           GIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_USERNAME: ${{ github.actor }}
