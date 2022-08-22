@@ -31,7 +31,7 @@ jobs:
       - run: npm ci
       - uses: appex-org/ci-workflows/.github/actions/execute-script@main
         with: 
-          name: publish_script
+          name: publish_package
           params: ${{ inputs.only-version }}
         env:
           GIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
