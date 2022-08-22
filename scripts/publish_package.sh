@@ -2,8 +2,8 @@
 
 ONLY_VERSION=$1
 
-git config --global user.email "$GIT_EMAIL"
-git config --global user.name "$GIT_USERNAME"
+git config --global user.email "appex.software.development@gmail.com"
+git config --global user.name "appex-org"
 git pull
 git checkout main
 
