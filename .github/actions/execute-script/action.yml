@@ -18,5 +18,5 @@ runs:
       shell: bash
     - run: chmod +x ./${{ inputs.name }}.sh
       shell: bash
-    - run: ./${{ inputs.name }}.sh ${{ inputs.params }}
+    - run: bash ./${{ inputs.name }}.sh ${{ inputs.params }}
       shell: bash
