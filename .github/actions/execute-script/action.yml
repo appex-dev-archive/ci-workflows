@@ -16,6 +16,8 @@ runs:
   steps:
     - run: curl -o ./${{ inputs.name }}.sh https://raw.githubusercontent.com/appex-org/ci-workflows/main/scripts/${{ inputs.name }}.sh 
       shell: bash
+    - run: ls
+      shell: bash
     - run: chmod a+x ./${{ inputs.name }}.sh
       shell: bash
     - run: bash ./${{ inputs.name }}.sh ${{ inputs.params }}
