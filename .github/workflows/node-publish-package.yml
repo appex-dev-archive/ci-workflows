@@ -10,7 +10,7 @@ on:
         type: string
       only-version: 
         description: 'Set to true if the package is only to be versioned and not published'
-        default: true
+        default: false
         required: false
         type: boolean
     secrets:
