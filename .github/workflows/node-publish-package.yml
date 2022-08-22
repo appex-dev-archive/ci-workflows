@@ -13,6 +13,10 @@ on:
         default: true
         required: false
         type: boolean
+    secrets:
+      node-auth-token:
+        description: 'The node auth token'
+        required: true
 
 jobs:
   publish-package:
