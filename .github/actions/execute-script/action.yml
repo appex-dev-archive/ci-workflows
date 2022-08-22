@@ -14,13 +14,5 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: echo ${{ github.action_path }}
-      shell: bash
-    - run: curl -o ./${{ inputs.name }}.sh https://raw.githubusercontent.com/appex-org/ci-workflows/main/scripts/${{ inputs.name }}.sh 
-      shell: bash
-    - run: ls
-      shell: bash
-    - run: chmod a+x ./${{ inputs.name }}.sh
-      shell: bash
     - run: bash ${{ github.action_path }}/../../../scripts/${{ inputs.name }}.sh ${{ inputs.params }}
       shell: bash

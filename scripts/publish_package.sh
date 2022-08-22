@@ -14,7 +14,7 @@ tag="$(git describe --tags --abbrev=0)"
 npm version "$tag" -m "Release version: %s"
 git push
 
-if [ "$only_version" = "false" ]
+if [ "$only_version" = false ]
 then
   echo "Publishing package ..."
   npm publish
