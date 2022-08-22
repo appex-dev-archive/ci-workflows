@@ -29,9 +29,9 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@appex'
       - run: npm ci
-      - run: echo ${{ github.action_path }}
-      - run: ${{ github.action_path }}/scripts/publish_package.sh ${{ inputs.only-version }}
+      - run: ./scripts/publish_package.sh ${{ inputs.only-version }}
         shell: bash
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
           GIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_USERNAME: ${{ github.actor }}
