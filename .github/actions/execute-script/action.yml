@@ -14,7 +14,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: curl -o ./${{ inputs.name }}.sh http://raw.githubusercontent.com/appex-org/ci-workflows/main/scripts/${{ inputs.name }}.sh 
+    - run: curl -o ./${{ inputs.name }}.sh https://raw.githubusercontent.com/appex-org/ci-workflows/main/scripts/${{ inputs.name }}.sh 
       shell: bash
     - run: chmod +x ./${{ inputs.name }}.sh
       shell: bash
