@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
           registry-url: https://npm.pkg.github.com/
-          scope: '@appex'
+          scope: '@appex-development'
       - run: npm ci
       - uses: appex-org/ci-workflows/.github/actions/execute-script@main
         with: 
