@@ -1,0 +1,16 @@
+name: Publish package
+
+description: Publishes package
+
+inputs:
+  only-version: 
+    description: 'Set to true if the package is only to be versioned and not published'
+    default: true
+    required: false
+    type: boolean
+
+runs:
+  using: 'composite'
+  steps:
+    - run: ${{ github.action_path }}/scripts/publish_package.sh ${{ inputs.only-version }}
+      shell: bash

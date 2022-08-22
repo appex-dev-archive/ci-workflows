@@ -29,8 +29,9 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@appex'
       - run: npm ci
-      - run: ./scripts/publish_package.sh ${{ inputs.only-version }}
-        shell: bash
+      - uses: ./.github/actions/publish-package
+        with:
+          only-version: ${{ inputs.only-version }}
         env:
           GIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_USERNAME: ${{ github.actor }}
