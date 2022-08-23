@@ -8,6 +8,11 @@ on:
         default: '16'
         required: false
         type: string
+      typescript-build:
+        description: 'Set to true to build typescript'
+        default: false
+        required: false
+        type: boolean
       audit-enabled:
         description: 'Set to false to disable auditing'
         default: true
@@ -35,6 +40,8 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@appex-development'
       - run: npm ci
+      - if: ${{ inputs.typescript-build }}
+        run: npm run build
       - if: ${{ inputs.audit-enabled }}
         run: npm run audit
       - if: ${{ inputs.linting-enabled }}
