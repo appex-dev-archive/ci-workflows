@@ -8,6 +8,11 @@ on:
         default: '16'
         required: false
         type: string
+      typescript-build:
+        description: 'Set to true to build typescript'
+        default: false
+        required: false
+        type: boolean
       only-version: 
         description: 'Set to true if the package is only to be versioned and not published'
         default: false
@@ -29,6 +34,8 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@appex-development'
       - run: npm ci
+      - if: ${{ inputs.typescript-build }}
+        run: npm run build
       - uses: appex-org/ci-workflows/.github/actions/execute-script@main
         with: 
           name: publish_package
