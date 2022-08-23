@@ -28,10 +28,16 @@ on:
         default: true
         required: false
         type: boolean
+    secrets:
+      node-auth-token:
+        description: 'The node auth token'
+        required: false
 
 jobs:
   build-and-verify:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -40,6 +46,7 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: '@appex-development'
       - run: npm ci
+
       - if: ${{ inputs.typescript-build }}
         run: npm run build
       - if: ${{ inputs.audit-enabled }}

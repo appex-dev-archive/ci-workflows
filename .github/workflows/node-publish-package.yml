@@ -26,6 +26,8 @@ on:
 jobs:
   publish-package:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -43,4 +45,3 @@ jobs:
         env:
           GIT_EMAIL: ${{ github.actor }}@users.noreply.github.com
           GIT_USERNAME: ${{ github.actor }}
-          NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
