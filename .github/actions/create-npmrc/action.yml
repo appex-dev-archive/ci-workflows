@@ -1,0 +1,19 @@
+name: Create npmrc
+
+description: Creates a npmrc file
+
+inputs:
+  auth-token:
+    description: "The NPM token"
+    required: true
+  scope:
+    description: "The NPM scope"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        echo "${{ inputs.scope }}:registry=https://npm.pkg.github.com" >> .npmrc
+        echo "//npm.pkg.github.com/:_authToken=${{ inputs.auth-token }}" >> .npmrc
+      shell: bash

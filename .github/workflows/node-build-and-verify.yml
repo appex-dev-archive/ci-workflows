@@ -3,34 +3,34 @@ name: Node build and verify
 on:
   workflow_call:
     inputs:
-      node-version: 
-        description: 'Sets the current node version'
-        default: '16'
+      node-version:
+        description: "Sets the current node version"
+        default: "16"
         required: false
         type: string
       typescript-build:
-        description: 'Set to true to build typescript'
+        description: "Set to true to build typescript"
         default: false
         required: false
         type: boolean
       audit-enabled:
-        description: 'Set to false to disable auditing'
+        description: "Set to false to disable auditing"
         default: true
         required: false
         type: boolean
       linting-enabled:
-        description: 'Set to false to disable linting'
+        description: "Set to false to disable linting"
         default: true
         required: false
         type: boolean
       tests-enabled:
-        description: 'Set to false to disable tests'
+        description: "Set to false to disable tests"
         default: true
         required: false
         type: boolean
     secrets:
       node-auth-token:
-        description: 'The node auth token'
+        description: "The node auth token"
         required: false
 
 jobs:
@@ -44,9 +44,12 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
           registry-url: https://npm.pkg.github.com/
-          scope: '@appex-development'
+          scope: "@appex-development"
+      - uses: appex-org/ci-workflows/.github/actions/create-npmrc@main
+        with:
+          auth-token: ${{ secrets.node-auth-token }}
+          scope: "@appex-development"
       - run: npm ci
-
       - if: ${{ inputs.typescript-build }}
         run: npm run build
       - if: ${{ inputs.audit-enabled }}
