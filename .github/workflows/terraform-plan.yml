@@ -1,0 +1,20 @@
+name: Terraform plan
+
+on:
+  workflow_call:
+    secrets:
+      gcp-credentials:
+        description: 'The GCP service account credentials'
+        required: true
+
+jobs:
+  terraform-plan:
+    runs-on: ubuntu-latest
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.gcp-credentials }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hashicorp/setup-terraform@v2
+      - run: terraform init
+      - run: terraform fmt -check
+      - run: terraform plan
