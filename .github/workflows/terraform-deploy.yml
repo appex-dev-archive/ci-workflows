@@ -39,9 +39,9 @@ jobs:
         run: echo '${{ secrets.env-config }}' >> main.tfvars
       - run: terraform init -backend-config=${{ inputs.backend-config }}
       - run: cd .. && ls && pwd
-      - run: cd ../../../../ && pwd
+      - run: cd ../../../../.. && ls && pwd
       - run: pwd
       - run: terraform fmt -check
       - run: terraform plan -var-file='main.tfvars'
-      - if: ${{ inputs.only-plan }} != true
+      - if: ${{ !inputs.only-plan }}
         run: terraform apply -var-file='main.tfvars' -auto-approve
