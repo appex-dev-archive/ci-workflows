@@ -10,7 +10,7 @@ on:
         type: string
       typescript-build:
         description: 'Set to true to build typescript'
-        default: false
+        default: true
         required: false
         type: boolean
       only-version: 
@@ -30,14 +30,11 @@ jobs:
       NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ inputs.node-version }}
-          registry-url: https://npm.pkg.github.com/
-          scope: '@appex-development'
-      - run: npm ci
       - if: ${{ inputs.typescript-build }}
-        run: npm run build
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./dist
       - uses: appex-org/ci-workflows/.github/actions/execute-script@main
         with: 
           name: publish_package

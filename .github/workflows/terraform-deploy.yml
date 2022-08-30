@@ -23,9 +23,6 @@ on:
 jobs:
   terraform-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./terraform
     env:
       GOOGLE_CREDENTIALS: ${{ secrets.gcp-credentials }}
     steps:
@@ -33,15 +30,16 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: dist
-          path: ../dist
+          path: ./dist
       - uses: hashicorp/setup-terraform@v2
       - name: Create environment
         run: echo '${{ secrets.env-config }}' >> main.tfvars
-      - run: terraform init -backend-config=${{ inputs.backend-config }}
-      - run: cd .. && ls && pwd
-      - run: cd ../../../../../.. && ls && pwd
-      - run: pwd
-      - run: terraform fmt -check
-      - run: terraform plan -var-file='main.tfvars'
+      - name: terraform init
+        run: cd terraform && terraform init -backend-config=${{ inputs.backend-config }}
+      - name: terraform fmt
+        run: cd terraform && terraform fmt -check
+      - name: terraform plan
+        run: terraform plan -var-file='main.tfvars'
       - if: ${{ !inputs.only-plan }}
+        name: terraform apply
         run: terraform apply -var-file='main.tfvars' -auto-approve
