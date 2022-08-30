@@ -3,12 +3,20 @@ name: Node integration tests
 on:
   workflow_call:
     inputs:
+      env-name:
+        description: "The environment name"
+        default: "dev"
+        required: false
+        type: string
       node-version:
         description: "Sets the current node version"
         default: "16"
         required: false
         type: string
     secrets:
+      env-config:
+        description: "The environment variables required for running the tests"
+        required: false
       node-auth-token:
         description: "The node auth token"
         required: false
@@ -26,4 +34,8 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: "@appex-development"
       - run: npm ci
+      - name: Create env
+        run: echo '${{ secrets.env-config }}' >> ${{ inputs.env-name }}.env
       - run: npm run test:integration
+        env:
+          ENV: ${{ inputs.env-name }}
