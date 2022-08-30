@@ -1,0 +1,29 @@
+name: Node integration tests
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: "Sets the current node version"
+        default: "16"
+        required: false
+        type: string
+    secrets:
+      node-auth-token:
+        description: "The node auth token"
+        required: false
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          registry-url: https://npm.pkg.github.com/
+          scope: "@appex-development"
+      - run: npm ci
+      - run: npm run test:integration
