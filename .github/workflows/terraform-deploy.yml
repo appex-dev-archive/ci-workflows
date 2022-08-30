@@ -33,7 +33,7 @@ jobs:
           path: ./dist
       - uses: hashicorp/setup-terraform@v2
       - name: Create environment
-        run: echo '${{ secrets.env-config }}' >> main.tfvars
+        run: cd terraform && echo '${{ secrets.env-config }}' >> main.tfvars
       - name: terraform init
         run: cd terraform && terraform init -backend-config=${{ inputs.backend-config }}
       - name: terraform fmt
