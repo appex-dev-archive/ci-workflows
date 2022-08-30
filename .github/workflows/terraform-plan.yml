@@ -6,6 +6,7 @@ on:
       backend-config:
         description: 'The backend config file'
         required: true
+        type: string
     secrets:
       gcp-credentials:
         description: 'The GCP service account credentials'
