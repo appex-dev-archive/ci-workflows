@@ -13,7 +13,7 @@ on:
         required: true
       env-config:
         description: 'The environment config'
-        type: string
+        required: true
 
 jobs:
   terraform-plan:
