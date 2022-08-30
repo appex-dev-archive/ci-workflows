@@ -35,7 +35,7 @@ jobs:
           scope: "@appex-development"
       - run: npm ci
       - name: Create env
-        run: echo '${{ secrets.env-config }}' >> .${{ inputs.env-name }}.env
+        run: echo '${{ secrets.env-config }}' >> '.${{ inputs.env-name }}.env'
       - run: npm run test:integration
         env:
           ENV: ${{ inputs.env-name }}
