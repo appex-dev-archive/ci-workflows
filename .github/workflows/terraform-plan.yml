@@ -11,6 +11,9 @@ on:
       gcp-credentials:
         description: 'The GCP service account credentials'
         required: true
+      env-config:
+        description: 'The environment config'
+        type: string
 
 jobs:
   terraform-plan:
@@ -23,6 +26,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: hashicorp/setup-terraform@v2
+      - name: Create environment
+        run: echo {{ inputs.env-config }} >> main.tfvars
       - run: terraform init -backend-config=${{ inputs.backend-config }}
       - run: terraform fmt -check
-      - run: terraform plan
+      - run: terraform plan -var-file='main.tfvars'
