@@ -52,7 +52,7 @@ jobs:
       - run: npm ci
       - if: ${{ inputs.typescript-build }}
         run: npm run build
-      - if: ${{ inputs.inputs.typescript-build }}
+      - if: ${{ inputs.typescript-build }}
         uses: actions/upload-artifact@v3
         with:
           name: dist
