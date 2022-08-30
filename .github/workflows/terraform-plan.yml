@@ -10,7 +10,7 @@ on:
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
-     defaults:
+    defaults:
       run:
         working-directory: ./terraform
     env:
