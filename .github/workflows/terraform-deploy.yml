@@ -1,4 +1,4 @@
-name: Terraform plan
+name: Terraform deploy
 
 on:
   workflow_call:
@@ -7,6 +7,11 @@ on:
         description: 'The backend config file'
         required: true
         type: string
+      only-plan:
+        description: 'Set to true to only plan a deployment'
+        default: false
+        required: false
+        type: boolean
     secrets:
       gcp-credentials:
         description: 'The GCP service account credentials'
@@ -35,3 +40,5 @@ jobs:
       - run: terraform init -backend-config=${{ inputs.backend-config }}
       - run: terraform fmt -check
       - run: terraform plan -var-file='main.tfvars'
+      - if: ${{ inputs.only-plan }}
+        run: terraform apply -var-file='main.tfvars' -auto-approve
