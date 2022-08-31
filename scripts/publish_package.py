@@ -2,8 +2,7 @@ import os
 import subprocess
 import sys
 
-args = sys.argv[1].split(" | ")
-only_version = args[1]
+only_version = sys.argv[1]
 
 print("Configuring git ...")
 subprocess.run("git", "config", "--global", "user.email", os.environ['GIT_EMAIL'], check=True)
