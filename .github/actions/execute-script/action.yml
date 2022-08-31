@@ -14,5 +14,5 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - run: bash ${{ github.action_path }}/../../../scripts/${{ inputs.name }}.sh ${{ inputs.params }}
+    - run: python ${{ github.action_path }}/../../../scripts/${{ inputs.name }}.py ${{ inputs.params }}
       shell: bash
