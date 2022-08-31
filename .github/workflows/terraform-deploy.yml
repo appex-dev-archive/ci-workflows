@@ -53,7 +53,7 @@ jobs:
         run: cd terraform && terraform apply -var-file='main.tfvars' -auto-approve
       - if: ${{ !inputs.only-plan }}
         name: Create GCP credentials
-        run: jq -n "${{ secrets.gcp-credentials }}" > keyfile.json
+        run: jq -n '${{ secrets.gcp-credentials }}' > keyfile.json
       - if: ${{ !inputs.only-plan }}
         uses: appex-org/ci-workflows/.github/actions/execute-script@main
         with: 
