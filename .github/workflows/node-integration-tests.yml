@@ -4,21 +4,24 @@ on:
   workflow_call:
     inputs:
       env-name:
-        description: "The environment name"
-        default: "dev"
+        description: 'The environment name'
+        default: 'dev'
         required: false
         type: string
       node-version:
-        description: "Sets the current node version"
-        default: "16"
+        description: 'Sets the current node version'
+        default: '16'
         required: false
         type: string
     secrets:
       env-config:
-        description: "The environment variables required for running the tests"
+        description: 'The environment variables required for running the tests'
         required: false
       node-auth-token:
-        description: "The node auth token"
+        description: 'The node auth token'
+        required: false
+      gcp-credentials:
+        description: 'The GCP service account credentials'
         required: false
 
 jobs:
@@ -26,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
+      GCP_CREDENTIALS: ${{ secrets.gcp-credentials }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -36,6 +40,10 @@ jobs:
       - run: npm ci
       - name: Create env
         run: cd tests/integration && echo '${{ secrets.env-config }}' >> '.${{ inputs.env-name }}.env'
+      - if: ${{ env.GCP_CREDENTIALS != '' }}
+        name: Create GCP credentials
+        run: jq -n '${{ env.GCP_CREDENTIALS }}' > keyfile.json
       - run: npm run test:integration
         env:
           ENV: ${{ inputs.env-name }}
+          GOOGLE_APPLICATION_CREDENTIALS: keyfile.json
