@@ -18,7 +18,9 @@ subprocess.run(["git", "pull"], check=True)
 # subprocess.run(["git", "push", "origin", "HEAD:main"], check=True)
 # print(f'Version {tag} tagged successfully')
 
+print(os.environ)
+
 if only_version == "false":
     print("Publishing package")
-    subprocess.run(["npm", "publish"], check=True, env={"NODE_AUTH_TOKEN": os.environ["NODE_AUTH_TOKEN"]})
+    subprocess.run(["npm", "publish"], check=True, env=os.environ.copy())
     print("Package published successfully")
