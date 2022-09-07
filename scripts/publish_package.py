@@ -5,8 +5,8 @@ import sys
 only_version = sys.argv[1]
 
 print("Configuring git ...")
-subprocess.run("git", "config", "--global", "user.email", os.environ['GIT_EMAIL'], check=True)
-subprocess.run("git", "config", "--global", "user.email", os.environ['GIT_USERNAME'], check=True)
+subprocess.run(["git", "config", "user.email", os.environ['GIT_EMAIL']], check=True)
+subprocess.run(["git", "config", "--global", "user.email", os.environ['GIT_USERNAME']], check=True)
 subprocess.run(["git", "pull"], check=True)
 subprocess.run(["git", "checkout", "main"], check=True)
 
