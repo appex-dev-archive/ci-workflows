@@ -15,7 +15,7 @@ subprocess.run(["npm", "version", tag, "-m", f'"Release version: {tag}"'], check
 subprocess.run(["git", "push", "origin", "HEAD:main"], check=True)
 print(f'Version {tag} tagged successfully')
 
-if not only_version:
+if only_version == "false":
     print("Publishing package")
     subprocess.run(["npm", "publish"], check=True)
     print("Package published successfully")
