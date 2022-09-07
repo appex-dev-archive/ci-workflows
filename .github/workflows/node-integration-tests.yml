@@ -17,6 +17,9 @@ on:
       env-config:
         description: 'The environment variables required for running the tests'
         required: false
+      local-env-config:
+        description: 'The environment variables required for running the tests locally'
+        required: false
       node-auth-token:
         description: 'The node auth token'
         required: false
@@ -38,6 +41,14 @@ jobs:
           registry-url: https://npm.pkg.github.com/
           scope: "@appex-development"
       - run: npm ci
+      - if: ${{ inputs.env-name == 'local' }}
+        name: Run service locally
+        run: |
+          sudo add-apt-repository ppa:cncf-buildpacks/pack-cli
+          sudo apt-get update
+          sudo apt-get install pack-cli
+          echo '${{ secrets.env-config }}' >> '.${{ inputs.env-name }}.env'
+          npm run start
       - name: Create env
         run: cd tests/integration && echo '${{ secrets.env-config }}' >> '.${{ inputs.env-name }}.env'
       - if: ${{ env.GCP_CREDENTIALS != '' }}
