@@ -17,8 +17,8 @@ on:
       env-config:
         description: 'The environment variables required for running the tests'
         required: false
-      local-env-config:
-        description: 'The environment variables required for running the tests locally'
+      service-env-config:
+        description: 'The environment variables required for running the service'
         required: false
       node-auth-token:
         description: 'The node auth token'
