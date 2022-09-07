@@ -15,7 +15,7 @@ print("Tagging package version ...")
 output = subprocess.run(["git", "describe", "--tags", "--abbrev=0"], capture_output=True, check=True)
 tag = output.stdout.decode("utf-8").replace("\n", "")
 subprocess.run(["npm", "version", tag, "-m", f'"Release version: {tag}"'], check=True)
-subprocess.run(["git", "push"], check=True)
+subprocess.run(["git", "push", "origin", "HEAD:main"], check=True)
 print(f'Version {tag} tagged successfully')
 
 if not only_version:
