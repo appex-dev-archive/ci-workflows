@@ -46,6 +46,11 @@ jobs:
           scope: "@appex-development"
       - run: npm ci
       - if: ${{ inputs.env-name == 'local' }}
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./dist
+      - if: ${{ inputs.env-name == 'local' }}
         name: Run service locally
         run: |
           sudo add-apt-repository ppa:cncf-buildpacks/pack-cli
