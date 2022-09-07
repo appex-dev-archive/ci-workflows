@@ -38,6 +38,10 @@ jobs:
         with:
           name: dist
           path: ./dist
+      - uses: appex-org/ci-workflows/.github/actions/create-npmrc@main
+        with:
+          auth-token: ${{ secrets.node-auth-token }}
+          scope: "@appex-development"
       - uses: appex-org/ci-workflows/.github/actions/execute-script@main
         with: 
           name: publish_package
