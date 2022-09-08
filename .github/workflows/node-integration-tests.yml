@@ -56,7 +56,7 @@ jobs:
           sudo add-apt-repository ppa:cncf-buildpacks/pack-cli
           sudo apt-get update
           sudo apt-get install pack-cli
-          echo '${{ secrets.env-config }}' >> '.${{ inputs.env-name }}.env'
+          echo '${{ secrets.service-env-config }}' >> '.${{ inputs.env-name }}.env'
           npm run start
       - name: Create env
         run: cd tests/integration && echo '${{ secrets.env-config }}' >> '.${{ inputs.env-name }}.env'
