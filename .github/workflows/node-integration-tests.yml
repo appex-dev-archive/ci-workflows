@@ -50,6 +50,9 @@ jobs:
         with:
           name: dist
           path: ./dist
+      - if: ${{ env.GCP_CREDENTIALS != '' }}
+        name: Create GCP credentials
+        run: jq -n '${{ env.GCP_CREDENTIALS }}' > keyfile.json
       - if: ${{ inputs.env-name == 'local' }}
         name: Run service locally
         run: |
@@ -60,9 +63,6 @@ jobs:
           npm run start
       - name: Create env
         run: cd tests/integration && echo '${{ secrets.env-config }}' >> '.${{ inputs.env-name }}.env'
-      - if: ${{ env.GCP_CREDENTIALS != '' }}
-        name: Create GCP credentials
-        run: jq -n '${{ env.GCP_CREDENTIALS }}' > keyfile.json
       - run: npm run test:integration
         env:
           ENV: ${{ inputs.env-name }}
