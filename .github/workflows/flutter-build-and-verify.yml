@@ -1,0 +1,22 @@
+name: Flutter build and verify
+
+on:
+  workflow_call:
+    inputs:
+      flutter-version:
+        description: "Sets the current node version"
+        default: "3.3.4"
+        required: false
+        type: string
+
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ inputs.flutter-version }}
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test --coverage
