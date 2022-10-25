@@ -16,7 +16,7 @@ on:
 
 jobs:
   ios-tests:
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
       - name: Start simulator
         run: |
