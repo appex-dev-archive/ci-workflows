@@ -41,7 +41,7 @@ jobs:
       - run: flutter test integration_test
 
   android-tests:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     if: ${{ inputs.run-android-tests }}
     steps:
       - uses: actions/checkout@v3
