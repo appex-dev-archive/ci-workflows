@@ -8,6 +8,10 @@ on:
         default: "3.3.4"
         required: false
         type: string
+    secrets:
+      env-config:
+        description: 'The environment config for the app'
+        required: false
 
 jobs:
   build-and-verify:
@@ -17,6 +21,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ inputs.flutter-version }}
+      - name: Create env
+        run: echo '${{ secrets.env-config }}' >> '.env'
       - run: flutter pub get
       - run: flutter analyze
       - run: flutter test --coverage
