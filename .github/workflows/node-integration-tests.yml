@@ -13,6 +13,11 @@ on:
         default: '16'
         required: false
         type: string
+      typescript-build:
+        description: "Set to true to build typescript"
+        default: true
+        required: false
+        type: boolean
     secrets:
       env-config:
         description: 'The environment variables required for running the tests'
@@ -45,7 +50,7 @@ jobs:
           auth-token: ${{ secrets.node-auth-token }}
           scope: "@appex-development"
       - run: npm ci
-      - if: ${{ inputs.env-name == 'local' }}
+      - if: ${{ (inputs.env-name == 'local') && (inputs.typescript-build) }}
         uses: actions/download-artifact@v3
         with:
           name: dist

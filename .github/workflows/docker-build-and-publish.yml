@@ -1,0 +1,39 @@
+name: Docker build and verify
+
+on:
+  workflow_call:
+    inputs:
+      publish-image:
+        description: "Set to true to run publish the image"
+        default: true
+        required: false
+        type: boolean
+      image-tag:
+        description: "Set the image tag"
+        required: true
+        type: string
+    secrets:
+      password:
+        description: "The password for the docker registry"
+        required: true
+
+jobs:
+  publish-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Registry login
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.password }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: ${{ inputs.publish-image }}
+          tags: ${{ inputs.image-tag }}
