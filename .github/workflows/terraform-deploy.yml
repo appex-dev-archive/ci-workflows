@@ -42,16 +42,16 @@ jobs:
           architecture: 'x64'
       - run: pip install google-cloud-storage
       - name: Create environment
-        run: cd infastructure && echo '${{ secrets.env-config }}' >> main.tfvars
+        run: cd infrastructure && echo '${{ secrets.env-config }}' >> main.tfvars
       - name: terraform init
-        run: cd infastructure && terraform init -backend-config=${{ inputs.backend-config }}
+        run: cd infrastructure && terraform init -backend-config=${{ inputs.backend-config }}
       - name: terraform fmt
-        run: cd infastructure && terraform fmt -check
+        run: cd infrastructure && terraform fmt -check
       - name: terraform plan
-        run: cd infastructure && terraform plan -var-file='main.tfvars'
+        run: cd infrastructure && terraform plan -var-file='main.tfvars'
       - if: ${{ !inputs.only-plan }}
         name: terraform apply
-        run: cd infastructure && terraform apply -var-file='main.tfvars' -auto-approve
+        run: cd infrastructure && terraform apply -var-file='main.tfvars' -auto-approve
       - if: ${{ !inputs.only-plan }}
         name: Create GCP credentials
         run: jq -n '${{ secrets.gcp-credentials }}' > keyfile.json
