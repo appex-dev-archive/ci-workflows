@@ -12,10 +12,6 @@ on:
         default: false
         required: false
         type: boolean
-      project:
-        description: 'The GCP project'
-        required: true
-        type: string
       typescript:
         description: "Set to true to download packaged code"
         default: true
@@ -70,15 +66,3 @@ jobs:
       - if: ${{ !inputs.only-plan }}
         name: terraform apply
         run: cd infrastructure && terraform apply -var-file='main.tfvars' -auto-approve
-
-      - if: ${{ !inputs.only-plan }}
-        name: Create GCP credentials
-        run: jq -n '${{ secrets.gcp-credentials }}' > keyfile.json
-
-      - if: ${{ !inputs.only-plan }}
-        uses: appex-org/ci-workflows/.github/actions/execute-script@main
-        with: 
-          name: deploy_clean_up
-          params: ${{ inputs.project }}
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: keyfile.json
