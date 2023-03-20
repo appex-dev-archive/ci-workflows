@@ -22,6 +22,9 @@ on:
       env-config:
         description: 'The environment variables required for running the tests'
         required: false
+      node-auth-token:
+        description: 'The node auth token'
+        required: false
       gcp-credentials:
         description: 'The GCP service account credentials'
         required: false
@@ -30,6 +33,7 @@ jobs:
   integration-tests:
     runs-on: ubuntu-latest
     env:
+      NODE_AUTH_TOKEN: ${{ secrets.node-auth-token }}
       GCP_CREDENTIALS: ${{ secrets.gcp-credentials }}
     steps:
       - name: Checkout
