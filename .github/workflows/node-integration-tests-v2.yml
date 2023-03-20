@@ -13,6 +13,11 @@ on:
         default: '16'
         required: false
         type: string
+      test-directory:
+        description: 'The directory path where the tests are located'
+        default: '.'
+        required: false
+        type: string
       typescript-build:
         description: 'Set to true to build typescript'
         default: true
@@ -63,7 +68,7 @@ jobs:
 
       - if: ${{ env.GCP_CREDENTIALS != '' }}
         name: Create GCP credentials
-        run: jq -n '${{ env.GCP_CREDENTIALS }}' > keyfile.json
+        run: jq -n '${{ env.GCP_CREDENTIALS }}' > ${{ inputs.test-directory }}/keyfile.json
 
       - name: Create env
         run: echo '${{ secrets.env-config }}' >> '.env'
