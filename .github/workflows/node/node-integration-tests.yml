@@ -1,0 +1,79 @@
+name: Node integration tests
+
+on:
+  workflow_call:
+    inputs:
+      env-name:
+        description: 'The environment name'
+        default: 'dev'
+        required: false
+        type: string
+      node-version:
+        description: 'Sets the current node version'
+        default: '16'
+        required: false
+        type: string
+      typescript-build:
+        description: 'Set to true to build typescript'
+        default: true
+        required: false
+        type: boolean
+    secrets:
+      env-config:
+        description: 'The environment variables required for running the tests'
+        required: false
+      gcp-credentials:
+        description: 'The GCP service account credentials'
+        required: false
+
+jobs:
+  integration-tests:
+    runs-on: ubuntu-latest
+    env:
+      GCP_CREDENTIALS: ${{ secrets.gcp-credentials }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          registry-url: https://npm.pkg.github.com/
+          scope: "@appex-development"
+
+      - name: Create .npmrc
+        uses: appex-org/ci-workflows/.github/actions/create-npmrc@main
+        with:
+          auth-token: ${{ secrets.node-auth-token }}
+          scope: "@appex-development"
+
+      - name: NPM install
+        run: npm ci
+
+      - if: ${{ (inputs.env-name == 'local') && (inputs.typescript-build) }}
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./dist
+
+      - if: ${{ env.GCP_CREDENTIALS != '' }}
+        name: Create GCP credentials
+        run: jq -n '${{ env.GCP_CREDENTIALS }}' > keyfile.json
+
+      - name: Create env
+        run: echo '${{ secrets.env-config }}' >> '.env'
+
+      - if: ${{ inputs.env-name == 'local' }}
+        name: Run emulators
+        run: npm run emulators
+
+      - if: ${{ inputs.env-name == 'local' }}
+        name: Run service
+        run: npm run start
+
+      - name: Run integration tests
+        run: npm run test:integration
+        env:
+          ENV: ${{ inputs.env-name }}
+          GOOGLE_APPLICATION_CREDENTIALS: keyfile.json
