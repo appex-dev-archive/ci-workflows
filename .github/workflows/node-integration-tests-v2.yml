@@ -85,12 +85,12 @@ jobs:
         name: Run emulators
         run: npm run emulators
 
-      # - if: ${{ inputs.env-name == 'local' }}
-      #   name: Run service
-      #   run: npm run start &
+      - if: ${{ inputs.env-name == 'local' }}
+        name: Run service
+        run: npm run start &
 
       - name: Run integration tests
-        run: npm run start & npm run test:integration
+        run: npm run test:integration
         env:
           ENV: ${{ inputs.env-name }}
           GOOGLE_APPLICATION_CREDENTIALS: keyfile.json
