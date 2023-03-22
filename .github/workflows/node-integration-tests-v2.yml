@@ -61,8 +61,11 @@ jobs:
         run: npm ci
 
       - if: ${{ (inputs.env-name == 'local') && (inputs.typescript-build) }}
-        name: Build
-        run: npm run build
+        name: 
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+          path: ./dist
 
       - if: ${{ env.GCP_CREDENTIALS != '' }}
         name: Create GCP credentials
