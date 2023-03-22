@@ -34,19 +34,10 @@ jobs:
       - uses: actions/checkout@v3
 
       - if: ${{ inputs.typescript }}
-        uses: actions/download-artifact@v3
-        with:
-          name: dist
-          path: ./dist
+        name: Build
+        run: npm run build
 
       - uses: hashicorp/setup-terraform@v2
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-          architecture: 'x64'
-
-      - run: pip install google-cloud-storage
 
       - name: Create environment
         run: cd infrastructure && echo '${{ secrets.env-config }}' >> main.tfvars
