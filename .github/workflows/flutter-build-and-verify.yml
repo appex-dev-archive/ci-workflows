@@ -17,10 +17,10 @@ jobs:
   build-and-verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ inputs.flutter-version }}
+      - uses: actions/checkout@v3
       - name: Create env
         run: echo '${{ secrets.env-config }}' >> '.env'
       - run: flutter pub get
